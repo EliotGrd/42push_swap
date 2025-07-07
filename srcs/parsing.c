@@ -6,13 +6,42 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:34:55 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/01 18:27:07 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/07 04:32:42 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+#include <limits.h>
 
-static int	*parse_string(char *s)
+int	ft_atoi_safe(const char *nptr, int *valid)
+{
+	int		i;
+	int		sign;
+	long	nb;
+
+	i = 0;
+	sign = 1;
+	nb = 0;
+	if (!nptr[i])
+		return (nb);
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i + 1] < 48 || nptr[i + 1] > 57)
+			return (nb);
+		if (nptr[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (nptr[i] >= 48 && nptr[i] <= 57)
+		nb = (nb * 10) + (nptr[i++] - '0');
+	if (nb * sign < INT_MIN || nb * sign > INT_MAX)
+		*valid = 0;
+	return (nb * sign);
+}
+
+static int	*parse_string(char *s, int *valid, int *size)
 {
 	int		i;
 	int		*tab;
@@ -23,42 +52,44 @@ static int	*parse_string(char *s)
 	while (splitted[i])
 		i++;
 	tab = malloc(sizeof(int) * i);
+	*size = i;
 	i = 0;
 	while (splitted[i])
 	{
-		tab[i] = ft_atoi(splitted[i]);
+		tab[i] = ft_atoi_safe(splitted[i], valid);
+		printf("[DEBUG] : %d ", tab[i]);
 		i++;
 	}
+	printf("\n[DEBUG] : %d %d %d\n", tab[0], tab[1], tab[2]);
 	return tab;
 }
 
-static int	*parse_int(int ac, char **av)
+static int	*parse_int(int ac, char **av, int *valid)
 {
 	int	i;
 	int	*tab;
 
 	i = 0;
 	tab = malloc(sizeof(int) * (ac - 1));
-	while (i < ac)
+	while (i < ac - 1)
 	{
-		tab[i] = ft_atoi(av[i]);
-		ft_printf("%d", tab[i]);
+		tab[i] = ft_atoi_safe(av[i + 1], valid);
+		ft_printf("[DEBUG] : %d ", tab[i]);
 		i++;
 	}
+	printf("\n[DEBUG] : %d %d %d\n", tab[0], tab[1], tab[2]);
 	return tab;
 }
 
 static int	is_all_digit(char *s, int is_lst)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	if (is_lst)
 		while (s[i])
 		{
-			if (ft_isdigit(s[i]) == 0 || ft_iswspace(s[i]) == 0)
+			if (ft_isdigit(s[i]) == 0 && ft_iswspace(s[i]) == 0)
 				return (0);
 			i++;
 		}
@@ -72,7 +103,7 @@ static int	is_all_digit(char *s, int is_lst)
 	return (1);
 }
 
-void	parsing(int ac, char **av)
+int	*parsing(int ac, char **av, int *size, int *valid)
 {
 	int	i;
 	int	*tab;
@@ -82,23 +113,21 @@ void	parsing(int ac, char **av)
 	if (ac == 2)
 	{
 		if (is_all_digit(av[1], 1))
-			tab = parse_string(av[1]);
+			tab = parse_string(av[1], valid, size);
 		else
-			ft_printf("Error");
+			*valid = 0;
 	}
 	else if (ac > 2)
 	{
 		while (++i < ac)
 		{
 			if (is_all_digit(av[i], 0) == 0)
-			{
-				ft_printf("Error");
-				return;
-			}
+				*valid = 0;
 		}
-		parse_int(ac, av);
+		tab = parse_int(ac, av, valid);
+		*size = ac - 1;
 	}
 	else
-		ft_printf("Error");
-	ft_printf("%d %d %d\n", tab[0], tab[1], tab[2]);
+		*valid = 0;
+	return tab;
 }
