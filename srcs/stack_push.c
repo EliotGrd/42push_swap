@@ -12,9 +12,11 @@
 
 #include "../includes/push_swap.h"
 
-static void push(t_stack *from, t_stack *to)
+static void	push(t_stack *from, t_stack *to)
 {
-	t_node *node = pop_top(from);
+	t_node	*node;
+
+	node = pop_top(from);
 	if (node)
 		push_top(to, node);
 }

@@ -21,7 +21,7 @@ NC = \033[0m
 all: $(LIBFT_AR) $(NAME)
 
 $(NAME): $(OBJ) $(INCS)
-	@echo "\n$(PURPLE)  Compiling Fractol...$(NC)"
+	@echo "\n$(PURPLE)  Compiling Push_swap...$(NC)"
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_AR) $(INC) -o $(NAME)
 	@echo "\n$(PURPLE)  Ready ✓$(NC)"
 

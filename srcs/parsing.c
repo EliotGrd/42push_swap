@@ -61,7 +61,7 @@ static int	*parse_string(char *s, int *valid, int *size)
 		i++;
 	}
 	printf("\n[DEBUG] : %d %d %d\n", tab[0], tab[1], tab[2]);
-	return tab;
+	return (tab);
 }
 
 static int	*parse_int(int ac, char **av, int *valid)
@@ -78,7 +78,7 @@ static int	*parse_int(int ac, char **av, int *valid)
 		i++;
 	}
 	printf("\n[DEBUG] : %d %d %d\n", tab[0], tab[1], tab[2]);
-	return tab;
+	return (tab);
 }
 
 static int	is_all_digit(char *s, int is_lst)
@@ -129,5 +129,5 @@ int	*parsing(int ac, char **av, int *size, int *valid)
 	}
 	else
 		*valid = 0;
-	return tab;
+	return (tab);
 }

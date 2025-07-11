@@ -12,14 +12,15 @@
 
 #include "../includes/push_swap.h"
 
-static void rotate(t_stack *stack)
+static void	rotate(t_stack *stack)
 {
-	if (!stack || stack->size < 2)
-		return;
-	t_node *first = pop_top(stack);
-	if (!first)
-		return;
+	t_node	*first;
 
+	if (!stack || stack->size < 2)
+		return ;
+	first = pop_top(stack);
+	if (!first)
+		return ;
 	first->next = NULL;
 	first->prev = stack->bottom;
 	if (stack->bottom)

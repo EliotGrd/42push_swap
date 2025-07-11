@@ -12,34 +12,80 @@
 
 #include "../includes/push_swap.h"
 
-void print_stack(t_stack *stack, const char *name)
+void	print_stack(t_stack *stack, const char *name)
 {
-	printf("Stack %s (size %d): ", name, stack->size);
-	t_node *cur = stack->top;
+	t_node	*cur;
+
+	printf("Stack %s (size %d):\n", name, stack->size);
+	cur = stack->top;
 	while (cur)
 	{
 		printf("%d ", cur->value);
+		printf("at : %d\n", cur->nvalue);
 		cur = cur->next;
 	}
 	printf("\n");
 }
 
-void init_stack(t_stack *stack)
+void	init_stack(t_stack *stack)
 {
 	stack->top = NULL;
 	stack->bottom = NULL;
 	stack->size = 0;
 }
 
-void	fill_stack(t_stack *a, int *arr, int size)
+int	*shell_sort(int *tab, int size)
 {
 	int	i;
+	int	j;
+	int	tmp;
+	int	gap;
+
+	i = 0;
+	gap = size / 2;
+	while (gap > 0)
+	{
+		i = gap;
+		while (i < size)
+		{
+			tmp = tab[i];
+			j = i;
+			while (j >= gap && tab[j - gap] > tmp)
+			{
+				tab[j] = tab[j - gap];
+				j -= gap;
+			}
+			tab[j] = tmp;
+			i++;
+		}
+		gap /= 2;
+	}
+	return (tab);
+}
+
+void	fill_stack(t_stack *a, int *arr, int size)
+{
+	int		i;
+	t_node	*cur;
 
 	i = size - 1;
 	while (i >= 0)
 	{
 		push_top(a, create_node(arr[i]));
 		i--;
+	}
+	shell_sort(arr, size);
+	cur = a->top;
+	while (cur)
+	{
+		i = 0;
+		while (i < size)
+		{
+			if (arr[i] == cur->value)
+				cur->nvalue = i;
+			i++;
+		}
+		cur = cur->next;
 	}
 }
 
@@ -66,12 +112,12 @@ void	check_duplicate(int *arr, int size, int *valid)
 
 int	main(int ac, char **av)
 {
-	int	*arr;
-	int	size;
-	int	valid;
-	t_stack a;
-	//t_stack b;
+	int		*arr;
+	int		size;
+	int		valid;
+	t_stack	a;
 
+	// t_stack b;
 	size = 0;
 	valid = 1;
 	arr = parsing(ac, av, &size, &valid);
@@ -87,6 +133,6 @@ int	main(int ac, char **av)
 	init_stack(&a);
 	fill_stack(&a, arr, size);
 	print_stack(&a, "a");
-	//print_stack(&b, "b");
+	// print_stack(&b, "b");
 	return (0);
 }

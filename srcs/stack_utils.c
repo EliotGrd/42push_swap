@@ -12,21 +12,23 @@
 
 #include "../includes/push_swap.h"
 
-t_node *create_node(int value)
+t_node	*create_node(int value)
 {
-	t_node *new = malloc(sizeof(t_node));
+	t_node	*new;
+
+	new = malloc(sizeof(t_node));
 	if (!new)
-		return NULL;
+		return (NULL);
 	new->value = value;
 	new->next = NULL;
 	new->prev = NULL;
-	return new;
+	return (new);
 }
 
-void push_top(t_stack *stack, t_node *node)
+void	push_top(t_stack *stack, t_node *node)
 {
 	if (!node || !stack)
-		return;
+		return ;
 	node->next = stack->top;
 	node->prev = NULL;
 	if (stack->top)
@@ -37,11 +39,13 @@ void push_top(t_stack *stack, t_node *node)
 	stack->size++;
 }
 
-t_node *pop_top(t_stack *stack)
+t_node	*pop_top(t_stack *stack)
 {
+	t_node	*node;
+
 	if (!stack || !stack->top)
-		return NULL;
-	t_node *node = stack->top;
+		return (NULL);
+	node = stack->top;
 	stack->top = node->next;
 	if (stack->top)
 		stack->top->prev = NULL;
@@ -50,5 +54,5 @@ t_node *pop_top(t_stack *stack)
 	node->next = NULL;
 	node->prev = NULL;
 	stack->size--;
-	return node;
+	return (node);
 }

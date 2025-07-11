@@ -6,24 +6,24 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 04:20:42 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/07 04:22:47 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/07 04:22:41 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void reverse_rotate(t_stack *stack)
+static void	reverse_rotate(t_stack *stack)
 {
-	if (!stack || stack->size < 2)
-		return;
-	t_node *last = stack->bottom;
+	t_node	*last;
 
+	if (!stack || stack->size < 2)
+		return ;
+	last = stack->bottom;
 	stack->bottom = last->prev;
 	if (stack->bottom)
 		stack->bottom->next = NULL;
 	else
 		stack->top = NULL;
-
 	last->prev = NULL;
 	last->next = stack->top;
 	if (stack->top)

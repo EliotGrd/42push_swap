@@ -17,7 +17,8 @@
 #include <stdlib.h>
 
 typedef struct s_node {
-	int		value;
+	int				value;
+	int				nvalue;
 	struct s_node	*next;
 	struct s_node	*prev;
 }			t_node;
