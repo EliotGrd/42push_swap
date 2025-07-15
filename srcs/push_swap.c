@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:34:24 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/07 04:59:59 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/15 19:49:23 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,35 @@ void	check_duplicate(int *arr, int size, int *valid)
 	}
 }
 
+int	is_already_sorted(t_stack *stack)
+{
+	t_node	*cur;
+
+	cur = stack->top;
+	while (cur)
+	{
+		if (cur->next)
+		{
+			if (cur->nvalue > cur->next->nvalue)
+			{
+				printf("not sorted\n");
+				return (0);
+			}
+		}
+		cur = cur->next;
+	}
+	printf("sorted");
+	return (1);
+}
+
 int	main(int ac, char **av)
 {
 	int		*arr;
 	int		size;
 	int		valid;
 	t_stack	a;
+	t_stack	b;
 
-	// t_stack b;
 	size = 0;
 	valid = 1;
 	arr = parsing(ac, av, &size, &valid);
@@ -130,9 +151,17 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	init_stack(&a);
-	init_stack(&a);
+	init_stack(&b);
 	fill_stack(&a, arr, size);
+	chunk_init(&a, &b);
+
+	printf("\nSTACK STATE : ");
+	if (is_already_sorted(&a))
+	{
+		//exit
+		printf("\n-- EXIT --\n");
+	}
 	print_stack(&a, "a");
-	// print_stack(&b, "b");
+	print_stack(&b, "b");
 	return (0);
 }

@@ -5,7 +5,9 @@ SRC_PATH = srcs/
 LIBFT_PATH = libft/
 LIBFT_AR = $(LIBFT_PATH)libft.a
 
-SRC = push_swap.c parsing.c stack_push.c stack_rotate.c stack_revrotate.c stack_swap.c stack_utils.c 
+SRC = push_swap.c parsing.c stack_push.c stack_rotate.c stack_revrotate.c \
+	  stack_swap.c stack_utils.c divide.c conquer.c split_from_to.c \
+	  three_sort.c
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 OBJ = $(SRC:.c=.o)
 DPD = $(SRC:.c=.d)

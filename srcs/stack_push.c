@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 04:08:28 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/07 04:13:56 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/15 16:15:50 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ static void	push(t_stack *from, t_stack *to)
 		push_top(to, node);
 }
 
-void	pa(t_stack *a, t_stack *b)
+void	pa(t_stack *b, t_stack *a)
 {
 	push(b, a);
+	write(1, "pa\n", 3);
 }
 
 void	pb(t_stack *a, t_stack *b)
 {
 	push(a, b);
+	write(1, "pb\n", 3);
 }
