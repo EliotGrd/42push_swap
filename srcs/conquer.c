@@ -50,6 +50,6 @@ void	divide_recursive(t_ps *ps, t_chunk *to_sort)
 	//if size positive
 	chunk_divide(ps, &dest, to_sort);
 	divide_recursive(ps, &dest.max);
-	divide_recursive(ps, &dest.max);
-	divide_recursive(ps, &dest.max);
+	divide_recursive(ps, &dest.mid);
+	divide_recursive(ps, &dest.min);
 }

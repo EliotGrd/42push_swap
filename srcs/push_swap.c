@@ -145,7 +145,7 @@ int	main(int ac, char **av)
 	check_duplicate(arr, size, &valid);
 	if (valid == 0)
 	{
-		ft_printf("Error");
+		write(1, "Error\n", 6);
 		if (arr)
 			free(arr);
 		return (0);
@@ -154,7 +154,7 @@ int	main(int ac, char **av)
 	init_stack(&b);
 	fill_stack(&a, arr, size);
 	chunk_init(&a, &b);
-
+/*
 	printf("\nSTACK STATE : ");
 	if (is_already_sorted(&a))
 	{
@@ -162,6 +162,13 @@ int	main(int ac, char **av)
 		printf("\n-- EXIT --\n");
 	}
 	print_stack(&a, "a");
-	print_stack(&b, "b");
+	print_stack(&b, "b");*/
 	return (0);
 }
+
+
+//verif avant de bouger si c pas deja trier
+//adapter en combien split si besoin
+//lister et opti
+//
+//va check ce quil se passe a partir de 9 3x3 check la condition darret
