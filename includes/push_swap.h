@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:29:41 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/15 18:18:25 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/16 23:18:20 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,15 @@ void				divide_recursive(t_ps *ps, t_chunk *to_sort);
 void				chunk_divide(t_ps *ps, t_split_dest *dest,
 						t_chunk *to_sort);
 
+/* OPTI */
+void				if_alone_go_top(t_ps *ps, t_chunk *to_sort);
+
 /* STACK */
 
 t_node				*create_node(int value);
 void				push_top(t_stack *stack, t_node *node);
 t_node				*pop_top(t_stack *stack);
+int					get_stack_size(t_stack *stack);
 
 void				sa(t_stack *a);
 void				sb(t_stack *b);

@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 22:18:51 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/15 19:59:24 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/16 23:08:25 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	divide_recursive(t_ps *ps, t_chunk *to_sort)
 {
 	t_split_dest	dest;
 
+	if_alone_go_top(ps, to_sort);
 	if (to_sort->size < 4)
 	{
 		if (to_sort->size == 3)
@@ -47,7 +48,6 @@ void	divide_recursive(t_ps *ps, t_chunk *to_sort)
 		}
 		return;
 	}
-	//if size positive
 	chunk_divide(ps, &dest, to_sort);
 	divide_recursive(ps, &dest.max);
 	divide_recursive(ps, &dest.mid);

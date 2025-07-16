@@ -7,7 +7,7 @@ LIBFT_AR = $(LIBFT_PATH)libft.a
 
 SRC = push_swap.c parsing.c stack_push.c stack_rotate.c stack_revrotate.c \
 	  stack_swap.c stack_utils.c divide.c conquer.c split_from_to.c \
-	  three_sort.c
+	  three_sort.c opti_utils.c
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 OBJ = $(SRC:.c=.o)
 DPD = $(SRC:.c=.d)

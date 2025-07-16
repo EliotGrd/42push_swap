@@ -68,7 +68,6 @@ static int	*parse_string(char *s, int *valid, int *size)
 	i = 0;
 	while (splitted[i])
 	{
-		write(1, "9", 1);
 		tab[i] = ft_atoi_safe(splitted[i], valid);
 		i++;
 	}
@@ -132,7 +131,6 @@ int	*parsing(int ac, char **av, int *size, int *valid)
 	tab = NULL;
 	if (ac == 2)
 	{
-		write(1, "3", 1);
 		if (is_all_digit(av[1], 1))
 			tab = parse_string(av[1], valid, size);
 		else

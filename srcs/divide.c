@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 22:18:45 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/15 19:56:37 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/16 22:56:24 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	chunk_init(t_stack *a, t_stack *b)
 {
-	t_ps ps;
+	t_ps	ps;
 	t_chunk	all;
 
 	ps.a = a;
@@ -68,42 +68,90 @@ t_node	*get_right_node(t_ps *ps, t_location loc)
 	else if (loc == TOP_B)
 		return (ps->b->top);
 	else
-		return (ps->b->bottom);	
+		return (ps->b->bottom);
+}
+
+int	get_chunk_lmin_suite(t_chunk *to_sort, t_node *cur,
+		t_stack *stack)
+{
+	int	i;
+	int	cur_min;
+
+	i = 0;
+	cur = stack->bottom;
+	cur_min = cur->nvalue;
+	while (++i < to_sort->size)
+	{
+		cur = cur->prev;
+		if (cur_min > cur->nvalue)
+			cur_min = cur->nvalue;
+	}
+	return (cur_min);
+}
+
+int	get_chunk_lmin(t_ps *ps, t_chunk *to_sort)
+{
+	int		i;
+	int		cur_min;
+	t_node	*cur;
+	t_stack	*stack;
+
+	i = 0;
+	cur = NULL;
+	if (to_sort->loc == TOP_A || to_sort->loc == BOTTOM_A)
+		stack = ps->a;
+	else
+		stack = ps->b;
+	if (to_sort->loc == TOP_A || to_sort->loc == TOP_B)
+	{
+		cur = stack->top;
+		cur_min = cur->nvalue;
+		while (++i < to_sort->size)
+		{
+			cur = cur->next;
+			if (cur_min > cur->nvalue)
+				cur_min = cur->nvalue;
+		}
+	}
+	else
+		cur_min = get_chunk_lmin_suite(to_sort, cur, stack);
+	return (cur_min);
 }
 
 void	chunk_divide(t_ps *ps, t_split_dest *dest, t_chunk *to_sort)
 {
-	int		n;
-	int		val;
+	int		i;
+	int		size;
 	int		tier1;
-	int		tier2;
+	int		val;
+	int		lmin;
 	t_node	*cur;
 
-	n = ps->a->size / 3;
-	tier1 = n;
-	tier2 = n * 2;
-	n = 0;
+	i = 0;
+	lmin = get_chunk_lmin(ps, to_sort);
+	size = to_sort->size;
+	tier1 = lmin + (size / 3);
 	dest_size_init(dest);
 	dest_loc_init(dest, to_sort);
-	while (n < to_sort->size)
+	while (i < size)
 	{
 		cur = get_right_node(ps, to_sort->loc);
 		val = cur->nvalue;
-		if (val < tier1)
+		if (val <= (lmin + size / 3))
 		{
 			split_from_to(ps, to_sort->loc, dest->min.loc);
 			dest->min.size++;
 		}
-		else if (val <= tier2)
+		else if (val <= lmin + ((size * 2) / 3))
 		{
 			split_from_to(ps, to_sort->loc, dest->mid.loc);
 			dest->mid.size++;
 		}
-		else if (val > tier2)
+		else
 		{
 			split_from_to(ps, to_sort->loc, dest->max.loc);
 			dest->max.size++;
 		}
-		n++;
+		i++;
 	}
 }

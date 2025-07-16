@@ -78,7 +78,7 @@ static void	from_top_a(t_ps *ps, t_node *max)
 		sa(ps->a);
 		rra(ps->a);
 	}
-	if (ps->a->top > ps->a->top->next)
+	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
 			sa(ps->a);
 }
 
@@ -100,7 +100,7 @@ static void	from_bot_a(t_ps *ps, t_node *max)
 		sa(ps->a);
 		rra(ps->a);
 	}
-	if (ps->a->top > ps->a->top->next)
+	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
 			sa(ps->a);
 }
 
@@ -125,7 +125,7 @@ static void from_top_b(t_ps *ps, t_node *max)
 		sa(ps->a);
 		pa(ps->b, ps->a);
 	}
-	if (ps->a->top > ps->a->top->next)
+	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
 			sa(ps->a);
 }
 
@@ -146,7 +146,7 @@ static void from_bot_b(t_ps *ps, t_node *max)
 		sa(ps->a);
 		pa(ps->b, ps->a);
 	}
-	if (ps->a->top > ps->a->top->next)
+	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
 			sa(ps->a);
 }
 

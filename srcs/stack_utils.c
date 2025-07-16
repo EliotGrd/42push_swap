@@ -12,6 +12,21 @@
 
 #include "../includes/push_swap.h"
 
+int	get_stack_size(t_stack *stack)
+{
+	int		i;
+	t_node	*cur;
+	
+	i = 0;
+	cur = stack->top;
+	while (cur)
+	{
+		cur = cur->next;
+		i++;
+	}
+	return (i);
+}
+
 t_node	*create_node(int value)
 {
 	t_node	*new;
