@@ -71,7 +71,7 @@ t_node	*get_right_node(t_ps *ps, t_location loc)
 		return (ps->b->bottom);
 }
 
-int	get_chunk_lmin_suite(t_chunk *to_sort, t_node *cur,
+static int	get_chunk_lmin_suite(t_chunk *to_sort, t_node *cur,
 		t_stack *stack)
 {
 	int	i;
@@ -135,7 +135,7 @@ void	chunk_divide(t_ps *ps, t_split_dest *dest, t_chunk *to_sort)
 	{
 		cur = get_right_node(ps, to_sort->loc);
 		val = cur->nvalue;
-		if (val < (lmin + size / 3))
+		if (val < lmin + (size / 3))
 		{
 			split_from_to(ps, to_sort->loc, dest->min.loc);
 			dest->min.size++;
@@ -152,4 +152,13 @@ void	chunk_divide(t_ps *ps, t_split_dest *dest, t_chunk *to_sort)
 		}
 		i++;
 	}
+	/*int sum = dest->min.size + dest->mid.size + dest->max.size;
+	if (sum != size)	
+	{
+		ft_printf("SPLIT MISMATCH: expect %d, got %d / %d / %d\n",
+   	           size, dest->min.size, dest->mid.size, dest->max.size);
+		exit(1);
+	}*/
 }
+
+//val < lmin + (size / 3)

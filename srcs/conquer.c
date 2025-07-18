@@ -40,7 +40,7 @@ void	divide_recursive(t_ps *ps, t_chunk *to_sort)
 			sort_two(ps, to_sort);
 			to_sort->size -= 2;
 		}
-		else
+		else //if (to_sort->size == 1)
 		{
 			if (to_sort->loc != TOP_A)
 				split_from_to(ps, to_sort->loc, TOP_A);

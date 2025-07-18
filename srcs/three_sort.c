@@ -100,6 +100,11 @@ static void	from_bot_a(t_ps *ps, t_node *max)
 		sa(ps->a);
 		rra(ps->a);
 	}
+	else
+	{
+		rra(ps->a);
+		rra(ps->a);
+	}
 	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
 			sa(ps->a);
 }
