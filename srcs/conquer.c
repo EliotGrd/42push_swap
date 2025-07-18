@@ -19,7 +19,7 @@ void	sort_two(t_ps *ps, t_chunk *to_sort)
 		split_from_to(ps, to_sort->loc, TOP_A);
 		split_from_to(ps, to_sort->loc, TOP_A);
 	}
-	if (ps->a->top > ps->a->top->next)
+	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
 		sa(ps->a);
 }
 

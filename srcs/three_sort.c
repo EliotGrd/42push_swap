@@ -120,7 +120,7 @@ static void from_top_b(t_ps *ps, t_node *max)
 	}
 	else
 	{
-		pb(ps->a, ps->b);
+		sb(ps->b);
 		pa(ps->b, ps->a);
 		sa(ps->a);
 		pa(ps->b, ps->a);
@@ -133,18 +133,23 @@ static void from_bot_b(t_ps *ps, t_node *max)
 {
 	split_from_to(ps, BOTTOM_B, TOP_A);
 	rrb(ps->b);
-	if (ps->b->top == max)
-	{
-		pa(ps->b, ps->a);
-		sa(ps->a);
-		split_from_to(ps, BOTTOM_B, TOP_A);
-	}
-	else if (ps->b->bottom == max)
+	if (ps->b->bottom == max)
 	{
 		rrb(ps->b);
 		pa(ps->b, ps->a);
 		sa(ps->a);
 		pa(ps->b, ps->a);
+	}
+	else if (ps->b->top == max)
+	{
+		pa(ps->b, ps->a);
+		sa(ps->a);
+		split_from_to(ps, BOTTOM_B, TOP_A);
+	}
+	else
+	{
+		pa(ps->b, ps->a);
+		split_from_to(ps, BOTTOM_B, TOP_A);
 	}
 	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
 			sa(ps->a);

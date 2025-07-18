@@ -122,7 +122,6 @@ void	chunk_divide(t_ps *ps, t_split_dest *dest, t_chunk *to_sort)
 {
 	int		i;
 	int		size;
-	int		tier1;
 	int		val;
 	int		lmin;
 	t_node	*cur;
@@ -130,19 +129,18 @@ void	chunk_divide(t_ps *ps, t_split_dest *dest, t_chunk *to_sort)
 	i = 0;
 	lmin = get_chunk_lmin(ps, to_sort);
 	size = to_sort->size;
-	tier1 = lmin + (size / 3);
 	dest_size_init(dest);
 	dest_loc_init(dest, to_sort);
 	while (i < size)
 	{
 		cur = get_right_node(ps, to_sort->loc);
 		val = cur->nvalue;
-		if (val <= (lmin + size / 3))
+		if (val < (lmin + size / 3))
 		{
 			split_from_to(ps, to_sort->loc, dest->min.loc);
 			dest->min.size++;
 		}
-		else if (val <= lmin + ((size * 2) / 3))
+		else if (val < lmin + ((size * 2) / 3))
 		{
 			split_from_to(ps, to_sort->loc, dest->mid.loc);
 			dest->mid.size++;
