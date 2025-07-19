@@ -6,65 +6,11 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:34:55 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/15 19:38:51 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/19 19:40:44 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-#include <limits.h>
-
-static int	ft_atoi_safe_suite(const char *nptr, int i, int sign, int *valid)
-{
-	long	nb;
-
-	nb = 0;
-	while (nptr[i] >= 48 && nptr[i] <= 57)
-	{
-		if (((nb * 10) + (nptr[i] - '0')) * sign < INT_MIN
-			|| ((nb * 10) + (nptr[i] - '0')) * sign > INT_MAX)
-				*valid = 0;
-		nb = (nb * 10) + (nptr[i++] - '0');
-	}
-	return (nb * sign);
-}
-
-int	ft_atoi_safe(const char *nptr, int *valid)
-{
-	int		i;
-	int		sign;
-	long	nb;
-
-	i = 0;
-	sign = 1;
-	nb = 0;
-	if (!nptr[i])
-		return (nb);
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
-		i++;
-	if (nptr[i] == '-' || nptr[i] == '+')
-	{
-		if (nptr[i + 1] < 48 || nptr[i + 1] > 57)
-			return (nb);
-		if (nptr[i] == '-')
-			sign = -sign;
-		i++;
-	}
-	nb = ft_atoi_safe_suite(nptr,i, sign, valid);
-	return (nb);
-}
-
-static void	split_free(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
 
 static int	*parse_string(char *s, int *valid, int *size)
 {
@@ -80,7 +26,10 @@ static int	*parse_string(char *s, int *valid, int *size)
 		i++;
 	tab = malloc(sizeof(int) * i);
 	if (!tab)
+	{
+		*valid = 0;
 		return (NULL);
+	}
 	*size = i;
 	i = 0;
 	while (splitted[i])
@@ -100,7 +49,10 @@ static int	*parse_int(int ac, char **av, int *valid)
 	i = 0;
 	tab = malloc(sizeof(int) * (ac - 1));
 	if (!tab)
+	{
+		*valid = 0;
 		return (NULL);
+	}
 	while (i < ac - 1)
 	{
 		tab[i] = ft_atoi_safe(av[i + 1], valid);
@@ -109,33 +61,44 @@ static int	*parse_int(int ac, char **av, int *valid)
 	return (tab);
 }
 
-static int	is_all_digit(char *s, int is_lst)
+static int	is_all_digit_lst(char *s)
 {
 	int	i;
 	int	contain_digit;
 
+	i = -1;
 	contain_digit = 0;
+	while (s[++i])
+		if (ft_isdigit(s[i]))
+			contain_digit = 1;
+	if (contain_digit == 0)
+		return (0);
+	i = 0;
+	while (s[++i])
+	{
+		if ((ft_isdigit(s[i]) == 0 && ft_iswspace(s[i]) == 0 && s[i] != '-')
+			|| (s[i] == '-' && s[i - 1] != ' '))
+			return (0);
+	}
+	return (1);
+}
+
+static int	is_all_digit(char *s, int is_lst)
+{
+	int	i;
+
 	i = -1;
 	if (is_lst)
 	{
-		while (s[++i])
-			if (ft_isdigit(s[i]))
-				contain_digit = 1;
-		if (contain_digit == 0)
+		if (is_all_digit_lst(s) == 0)
 			return (0);
-		i = 0;
-		while (s[++i])
-		{
-			if (ft_isdigit(s[i]) == 0 && ft_iswspace(s[i]) == 0 
-				&& s[i] != '-')
-				return (0);
-		}
 	}
 	else
 	{
 		while (s[++i])
 		{
-			if (ft_isdigit(s[i]) == 0 && s[i] != '-')
+			if ((ft_isdigit(s[i]) == 0 && s[i] != '-') || (s[i] == '-'
+					&& ft_isdigit(s[i - 1])))
 				return (0);
 		}
 	}

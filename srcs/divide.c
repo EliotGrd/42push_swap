@@ -12,18 +12,6 @@
 
 #include "../includes/push_swap.h"
 
-void	chunk_init(t_stack *a, t_stack *b)
-{
-	t_ps	ps;
-	t_chunk	all;
-
-	ps.a = a;
-	ps.b = b;
-	all.loc = TOP_A;
-	all.size = ps.a->size;
-	divide_recursive(&ps, &all);
-}
-
 static void	dest_size_init(t_split_dest *dest)
 {
 	dest->max.size = 0;
@@ -71,51 +59,11 @@ t_node	*get_right_node(t_ps *ps, t_location loc)
 		return (ps->b->bottom);
 }
 
-static int	get_chunk_lmin_suite(t_chunk *to_sort, t_node *cur,
-		t_stack *stack)
+static void	move_and_increment(t_ps *ps, t_chunk *to_sort,
+		t_chunk *target_chunk)
 {
-	int	i;
-	int	cur_min;
-
-	i = 0;
-	cur = stack->bottom;
-	cur_min = cur->nvalue;
-	while (++i < to_sort->size)
-	{
-		cur = cur->prev;
-		if (cur_min > cur->nvalue)
-			cur_min = cur->nvalue;
-	}
-	return (cur_min);
-}
-
-int	get_chunk_lmin(t_ps *ps, t_chunk *to_sort)
-{
-	int		i;
-	int		cur_min;
-	t_node	*cur;
-	t_stack	*stack;
-
-	i = 0;
-	cur = NULL;
-	if (to_sort->loc == TOP_A || to_sort->loc == BOTTOM_A)
-		stack = ps->a;
-	else
-		stack = ps->b;
-	if (to_sort->loc == TOP_A || to_sort->loc == TOP_B)
-	{
-		cur = stack->top;
-		cur_min = cur->nvalue;
-		while (++i < to_sort->size)
-		{
-			cur = cur->next;
-			if (cur_min > cur->nvalue)
-				cur_min = cur->nvalue;
-		}
-	}
-	else
-		cur_min = get_chunk_lmin_suite(to_sort, cur, stack);
-	return (cur_min);
+	split_from_to(ps, to_sort->loc, target_chunk->loc);
+	target_chunk->size++;
 }
 
 void	chunk_divide(t_ps *ps, t_split_dest *dest, t_chunk *to_sort)
@@ -136,29 +84,11 @@ void	chunk_divide(t_ps *ps, t_split_dest *dest, t_chunk *to_sort)
 		cur = get_right_node(ps, to_sort->loc);
 		val = cur->nvalue;
 		if (val < lmin + (size / 3))
-		{
-			split_from_to(ps, to_sort->loc, dest->min.loc);
-			dest->min.size++;
-		}
+			move_and_increment(ps, to_sort, &dest->min);
 		else if (val < lmin + ((size * 2) / 3))
-		{
-			split_from_to(ps, to_sort->loc, dest->mid.loc);
-			dest->mid.size++;
-		}
+			move_and_increment(ps, to_sort, &dest->mid);
 		else
-		{
-			split_from_to(ps, to_sort->loc, dest->max.loc);
-			dest->max.size++;
-		}
+			move_and_increment(ps, to_sort, &dest->max);
 		i++;
 	}
-	/*int sum = dest->min.size + dest->mid.size + dest->max.size;
-	if (sum != size)	
-	{
-		ft_printf("SPLIT MISMATCH: expect %d, got %d / %d / %d\n",
-   	           size, dest->min.size, dest->mid.size, dest->max.size);
-		exit(1);
-	}*/
 }
-
-//val < lmin + (size / 3)

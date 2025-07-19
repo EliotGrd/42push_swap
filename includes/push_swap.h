@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:29:41 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/16 23:18:20 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/19 23:44:29 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,17 @@ typedef struct s_ps
 
 /* MISC */
 int					*parsing(int ac, char **av, int *size, int *valid);
-void				split_from_to(t_ps *ps, t_location from, t_location to);
-void				sort_three(t_ps *ps, t_chunk *to_sort);
 void				chunk_init(t_stack *a, t_stack *b);
+int					get_chunk_lmin(t_ps *ps, t_chunk *to_sort);
+int					ft_atoi_safe(const char *nptr, int *valid);
+void				split_free(char **arr);
+int					*shell_sort(int *tab, int size);
+t_node				*three_chunk_max_val(t_ps *ps, t_chunk *chunk);
+void				check_duplicate(int *arr, int size, int *valid);
 
 /* SORT */
-void				divide_recursive(t_ps *ps, t_chunk *to_sort);
+void				split_from_to(t_ps *ps, t_location from, t_location to);
+void				sort_three(t_ps *ps, t_chunk *to_sort);
 void				chunk_divide(t_ps *ps, t_split_dest *dest,
 						t_chunk *to_sort);
 
@@ -79,6 +84,9 @@ void				push_top(t_stack *stack, t_node *node);
 t_node				*pop_top(t_stack *stack);
 int					get_stack_size(t_stack *stack);
 void				free_stack(t_stack *stack);
+void				init_stack(t_stack *stack);
+int					fill_stack(t_stack *a, int *arr, int size);
+int					is_stack_sorted(t_stack *stack);
 
 void				sa(t_stack *a);
 void				sb(t_stack *b);

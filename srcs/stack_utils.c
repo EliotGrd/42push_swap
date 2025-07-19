@@ -16,7 +16,7 @@ int	get_stack_size(t_stack *stack)
 {
 	int		i;
 	t_node	*cur;
-	
+
 	i = 0;
 	cur = stack->top;
 	while (cur)
@@ -38,6 +38,26 @@ t_node	*create_node(int value)
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
+}
+
+void	free_stack(t_stack *stack)
+{
+	t_node	*cur;
+	t_node	*next;
+
+	if (!stack)
+		return ;
+	cur = stack->top;
+	while (cur)
+	{
+		next = cur->next;
+		free(cur);
+		cur = next;
+	}
+	free(cur);
+	stack->top = NULL;
+	stack->bottom = NULL;
+	stack->size = 0;
 }
 
 void	push_top(t_stack *stack, t_node *node)

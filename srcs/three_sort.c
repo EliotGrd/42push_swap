@@ -12,57 +12,6 @@
 
 #include "../includes/push_swap.h"
 
-static t_node *three_chunk_max_val_suite(t_ps *ps, t_chunk *chunk)
-{
-	int		i;
-	t_node	*max;
-	t_node	*cur;
-	t_stack	*stack;
-
-	i = 3;
-	if (chunk->loc == BOTTOM_A)
-		stack = ps->a;
-	else
-		stack = ps->b;
-	cur = stack->bottom;
-	max = cur;
-	while (--i > 0)
-	{
-		if (cur->prev->nvalue > max->nvalue)
-			max = cur->prev;
-		cur = cur->prev;
-	}
-	return (max);
-}
-
-t_node	*three_chunk_max_val(t_ps *ps, t_chunk *chunk)
-{
-	int		i;
-	t_node	*cur;
-	t_node	*max;
-	t_stack	*stack;
-
-	i = 3;
-	if (chunk->loc == TOP_A || chunk->loc == TOP_B)
-	{
-		if (chunk->loc == TOP_A)
-			stack = ps->a;
-		else
-			stack = ps->b;
-		cur = stack->top;
-		max = cur;
-		while (--i > 0)
-		{
-			if (cur->next->nvalue > max->nvalue)
-				max = cur->next;
-			cur = cur->next;
-		}
-	}
-	else
-		max = three_chunk_max_val_suite(ps, chunk);
-	return (max);
-}
-
 static void	from_top_a(t_ps *ps, t_node *max)
 {
 	if (ps->a->top == max)
@@ -79,7 +28,7 @@ static void	from_top_a(t_ps *ps, t_node *max)
 		rra(ps->a);
 	}
 	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
-			sa(ps->a);
+		sa(ps->a);
 }
 
 static void	from_bot_a(t_ps *ps, t_node *max)
@@ -106,10 +55,10 @@ static void	from_bot_a(t_ps *ps, t_node *max)
 		rra(ps->a);
 	}
 	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
-			sa(ps->a);
+		sa(ps->a);
 }
 
-static void from_top_b(t_ps *ps, t_node *max)
+static void	from_top_b(t_ps *ps, t_node *max)
 {
 	pa(ps->b, ps->a);
 	if (ps->a->top == max)
@@ -131,10 +80,10 @@ static void from_top_b(t_ps *ps, t_node *max)
 		pa(ps->b, ps->a);
 	}
 	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
-			sa(ps->a);
+		sa(ps->a);
 }
 
-static void from_bot_b(t_ps *ps, t_node *max)
+static void	from_bot_b(t_ps *ps, t_node *max)
 {
 	split_from_to(ps, BOTTOM_B, TOP_A);
 	rrb(ps->b);
@@ -157,7 +106,7 @@ static void from_bot_b(t_ps *ps, t_node *max)
 		split_from_to(ps, BOTTOM_B, TOP_A);
 	}
 	if (ps->a->top->nvalue > ps->a->top->next->nvalue)
-			sa(ps->a);
+		sa(ps->a);
 }
 
 void	sort_three(t_ps *ps, t_chunk *to_sort)
@@ -182,4 +131,3 @@ void	sort_three(t_ps *ps, t_chunk *to_sort)
 		from_bot_b(ps, max);
 	}
 }
-
