@@ -78,6 +78,7 @@ t_node				*create_node(int value);
 void				push_top(t_stack *stack, t_node *node);
 t_node				*pop_top(t_stack *stack);
 int					get_stack_size(t_stack *stack);
+void				free_stack(t_stack *stack);
 
 void				sa(t_stack *a);
 void				sb(t_stack *b);

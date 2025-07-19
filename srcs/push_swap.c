@@ -121,14 +121,32 @@ int	is_already_sorted(t_stack *stack)
 		{
 			if (cur->nvalue > cur->next->nvalue)
 			{
-				printf("not sorted\n");
 				return (0);
 			}
 		}
 		cur = cur->next;
 	}
-	printf("sorted");
 	return (1);
+}
+
+void	free_stack(t_stack *stack)
+{
+	t_node	*cur;
+	t_node	*next;
+
+	if (!stack)
+		return;
+	cur = stack->top;
+	while (cur)
+	{
+		next = cur->next;
+		free(cur);
+		cur = next;
+	}
+	free(cur);
+	stack->top = NULL;
+	stack->bottom = NULL;
+	stack->size = 0;
 }
 
 int	main(int ac, char **av)
@@ -153,16 +171,10 @@ int	main(int ac, char **av)
 	init_stack(&a);
 	init_stack(&b);
 	fill_stack(&a, arr, size);
-	chunk_init(&a, &b);
-/*
-	printf("\nSTACK STATE : ");
-	if (is_already_sorted(&a))
-	{
-		//exit
-		printf("\n-- EXIT --\n");
-	}
-	print_stack(&a, "a");
-	print_stack(&b, "b");*/
+	if (!is_already_sorted(&a))
+		chunk_init(&a, &b);
+	free_stack(&a);
+	free(arr);
 	return (0);
 }
 

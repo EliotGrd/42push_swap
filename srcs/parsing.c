@@ -53,6 +53,19 @@ int	ft_atoi_safe(const char *nptr, int *valid)
 	return (nb);
 }
 
+static void	split_free(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
 static int	*parse_string(char *s, int *valid, int *size)
 {
 	int		i;
@@ -61,9 +74,13 @@ static int	*parse_string(char *s, int *valid, int *size)
 
 	i = 0;
 	splitted = ft_split(s, ' ');
+	if (!splitted)
+		return (NULL);
 	while (splitted[i])
 		i++;
 	tab = malloc(sizeof(int) * i);
+	if (!tab)
+		return (NULL);
 	*size = i;
 	i = 0;
 	while (splitted[i])
@@ -71,6 +88,7 @@ static int	*parse_string(char *s, int *valid, int *size)
 		tab[i] = ft_atoi_safe(splitted[i], valid);
 		i++;
 	}
+	split_free(splitted);
 	return (tab);
 }
 
@@ -81,6 +99,8 @@ static int	*parse_int(int ac, char **av, int *valid)
 
 	i = 0;
 	tab = malloc(sizeof(int) * (ac - 1));
+	if (!tab)
+		return (NULL);
 	while (i < ac - 1)
 	{
 		tab[i] = ft_atoi_safe(av[i + 1], valid);
@@ -115,7 +135,7 @@ static int	is_all_digit(char *s, int is_lst)
 	{
 		while (s[++i])
 		{
-			if (ft_isdigit(s[i]) == 0)
+			if (ft_isdigit(s[i]) == 0 && s[i] != '-')
 				return (0);
 		}
 	}
