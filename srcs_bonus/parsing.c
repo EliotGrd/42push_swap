@@ -73,11 +73,15 @@ static int	is_all_digit_lst(char *s)
 			contain_digit = 1;
 	if (contain_digit == 0)
 		return (0);
-	i = 0;
+	i = -1;
+	if (s[0] == '-')
+		i++;
 	while (s[++i])
 	{
 		if ((ft_isdigit(s[i]) == 0 && ft_iswspace(s[i]) == 0 && s[i] != '-')
 			|| (s[i] == '-' && s[i - 1] != ' '))
+			return (0);
+		if (s[i] == '-' && !ft_isdigit(s[i + 1]))
 			return (0);
 	}
 	return (1);
@@ -95,10 +99,14 @@ static int	is_all_digit(char *s, int is_lst)
 	}
 	else
 	{
+		if (s[0] == '\0')
+			return (0);
 		while (s[++i])
 		{
 			if ((ft_isdigit(s[i]) == 0 && s[i] != '-') || (s[i] == '-'
 					&& ft_isdigit(s[i - 1])))
+				return (0);
+			if (s[i] == '-' && !ft_isdigit(s[i + 1]))
 				return (0);
 		}
 	}
@@ -130,6 +138,6 @@ int	*parsing(int ac, char **av, int *size, int *valid)
 		*size = ac - 1;
 	}
 	else
-		*valid = 0;
+		exit(0);
 	return (tab);
 }

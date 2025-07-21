@@ -99,6 +99,8 @@ static int	is_all_digit(char *s, int is_lst)
 	}
 	else
 	{
+		if (s[0] == '\0')
+			return (0);
 		while (s[++i])
 		{
 			if ((ft_isdigit(s[i]) == 0 && s[i] != '-') || (s[i] == '-'
@@ -136,6 +138,6 @@ int	*parsing(int ac, char **av, int *size, int *valid)
 		*size = ac - 1;
 	}
 	else
-		*valid = 0;
+		exit(0);
 	return (tab);
 }
