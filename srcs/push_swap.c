@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:34:24 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/19 23:44:12 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/20 04:20:16 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,6 @@ int	fill_stack(t_stack *a, int *arr, int size)
 	return (1);
 }
 
-void	check_duplicate(int *arr, int size, int *valid)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	i = 0;
-	j = 0;
-	while (i < size)
-	{
-		j = i + 1;
-		while (j < size)
-		{
-			if (arr[i] == arr[j])
-				*valid = 0;
-			j++;
-		}
-		i++;
-	}
-}
 
 int	is_stack_sorted(t_stack *stack)
 {
@@ -84,33 +64,4 @@ int	is_stack_sorted(t_stack *stack)
 		cur = cur->next;
 	}
 	return (1);
-}
-
-int	main(int ac, char **av)
-{
-	int		*arr;
-	int		size;
-	int		valid;
-	t_stack	a;
-	t_stack	b;
-
-	size = 0;
-	valid = 1;
-	arr = parsing(ac, av, &size, &valid);
-	if (valid)
-		check_duplicate(arr, size, &valid);
-	if (valid == 0)
-	{
-		write(1, "Error\n", 6);
-		if (arr)
-			free(arr);
-		return (0);
-	}
-	init_stack(&a);
-	valid = fill_stack(&a, arr, size);
-	if (!is_stack_sorted(&a) && valid)
-		chunk_init(&a, &b);
-	free_stack(&a);
-	free(arr);
-	return (0);
 }

@@ -12,6 +12,27 @@
 
 #include "../includes/push_swap.h"
 
+void	check_duplicate(int *arr, int size, int *valid)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	i = 0;
+	j = 0;
+	while (i < size)
+	{
+		j = i + 1;
+		while (j < size)
+		{
+			if (arr[i] == arr[j])
+				*valid = 0;
+			j++;
+		}
+		i++;
+	}
+}
+
 int	*shell_sort(int *tab, int size)
 {
 	int	i;

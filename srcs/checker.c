@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 23:15:53 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/19 23:45:42 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/21 01:15:38 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,56 @@
 
 int	execute_cmds(char *line, t_stack *a, t_stack *b)
 {
+	if (!(ft_strcmp(line, "sa")))
+		return (sa(a), 1);
+	if (!(ft_strcmp(line, "sb")))
+		return (sb(b), 1);
+	if (!(ft_strcmp(line, "ss")))
+		return (ss(a, b), 1);
+	if (!(ft_strcmp(line, "pa")))
+		return (pa(a, b), 1);
+	if (!(ft_strcmp(line, "pb")))
+		return (pb(b, a), 1);
+	if (!(ft_strcmp(line, "ra")))
+		return (ra(a), 1);
+	if (!(ft_strcmp(line, "rb")))
+		return (rb(b), 1);
+	if (!(ft_strcmp(line, "rr")))
+		return (rr(a, b), 1);
+	if (!(ft_strcmp(line, "rra")))
+		return (rra(a), 1);
+	if (!(ft_strcmp(line, "rrb")))
+		return (rrb(b), 1);
+	if (!(ft_strcmp(line, "rrr")))
+		return (rrr(a, b), 1);
+	return (0);
 }
 
-int	read_ops(t_stack *a, t_stack *b)
+void	error_handler(char *line, t_stack *a, t_stack *b)
 {
-	char *line;
+	free(line);
+	if (a->top)
+		free_stack(a);
+	if (b->top)
+		free_stack(b);
+	write(2, "Error\n", 6);
+	return;
+}
 
-	while (line = get_next_line(0))
+void	read_ops(t_stack *a, t_stack *b)
+{
+	char	*line;
+
+	line = get_next_line(0);
+	while (line)
 	{
-		if (execute_cmds(line, a, b))
-			error_h()
+		if (!execute_cmds(line, a, b))
+			error_handler(line, a, b);
 		free(line);
+		line = get_next_line(0);
 	}
+	free(line);
+
 }
 
 void	check_and_res(t_stack *a, t_stack *b)
@@ -39,6 +77,10 @@ void	check_and_res(t_stack *a, t_stack *b)
 		write(1, "OK\n", 3);
 	else
 		write(1, "KO\n", 3);
+	if (a->top)
+		free_stack(a);
+	if (b->top)
+		free_stack(b);
 }
 
 int	main(int ac, char **av)

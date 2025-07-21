@@ -7,10 +7,16 @@ LIBFT_AR = $(LIBFT_PATH)libft.a
 
 SRC = push_swap.c parsing.c stack_push.c stack_rotate.c stack_revrotate.c \
 	  stack_swap.c stack_utils.c divide.c conquer.c split_from_to.c \
-	  three_sort.c opti_utils.c max_and_min.c general_utils.c
+	  three_sort.c opti_utils.c max_and_min.c general_utils.c main.c
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 OBJ = $(SRC:.c=.o)
 DPD = $(SRC:.c=.d)
+
+BONU = checker.c general_utils.c parsing.c stack_push.c stack_rotate.c \
+	   stack_revrotate.c stack_swap.c stack_utils.c push_swap.c
+BONUS = $(addprefix $(SRC_PATH), $(BONU))
+OBJ_BON = $(BONUS:.c=.o)
+OBJ_DPD = $(BONUS:.c=.d)
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -g
@@ -29,6 +35,11 @@ $(NAME): $(OBJ) $(INCS)
 
 -include $(DPD)
 
+bonus: $(OBJ) $(OBJ_BON) $(INCS)
+	@echo "\n$(PURPLE)  Compiling Bonus...$(NC)"
+	@$(CC) $(CFLAGS) $(OBJ_BON) $(LIBFT_AR) $(INC) -o checker
+	@echo "\n$(PURPLE)  Ready ✓$(NC)\n"
+
 %.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) -DKEY_HEADER='"$(KEY_HEADER)"' $(INC) -c $< -o $@
 
@@ -39,8 +50,8 @@ $(LIBFT_AR):
 
 clean:
 	@echo "\n$(PURPLE)  Cleaning object files... $(NC)"
-	@rm -rf $(OBJ)
-	@rm -rf $(DPD)
+	@rm -rf $(OBJ) $(OBJ_BONUS)
+	@rm -rf $(DPD) $(OBJ_DPD)
 	@make -s clean -C $(LIBFT_PATH)
 	@echo "\n$(PURPLE)  Done ✓$(NC)"
 
