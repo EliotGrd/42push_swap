@@ -87,10 +87,15 @@ void	chunk_init(t_stack *a, t_stack *b)
 	ps.b = b;
 	all.loc = TOP_A;
 	all.size = ps.a->size;
-	if (a->size < 4)
+	if (a->size == 3)
 	{
 		stack_of_three(&ps);
 		return ;
+	}
+	else if (a->size == 2)
+	{
+		if (a->top->nvalue > a->top->next->nvalue)
+			sa(a);
 	}
 	divide_recursive(&ps, &all);
 }

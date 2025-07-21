@@ -1,7 +1,9 @@
 
 NAME = push_swap
+NAME_BON = checker
 
 SRC_PATH = srcs/
+BON_PATH = srcs_bonus/
 LIBFT_PATH = libft/
 LIBFT_AR = $(LIBFT_PATH)libft.a
 
@@ -14,7 +16,7 @@ DPD = $(SRC:.c=.d)
 
 BONU = checker.c general_utils.c parsing.c stack_push.c stack_rotate.c \
 	   stack_revrotate.c stack_swap.c stack_utils.c push_swap.c
-BONUS = $(addprefix $(SRC_PATH), $(BONU))
+BONUS = $(addprefix $(BON_PATH), $(BONU))
 OBJ_BON = $(BONUS:.c=.o)
 OBJ_DPD = $(BONUS:.c=.d)
 
@@ -35,13 +37,15 @@ $(NAME): $(OBJ) $(INCS)
 
 -include $(DPD)
 
-bonus: $(OBJ) $(OBJ_BON) $(INCS)
+bonus: $(OBJ_BON) $(INCS)
 	@echo "\n$(PURPLE)  Compiling Bonus...$(NC)"
-	@$(CC) $(CFLAGS) $(OBJ_BON) $(LIBFT_AR) $(INC) -o checker
+	@$(CC) $(CFLAGS) $(OBJ_BON) $(LIBFT_AR) $(INC) -o $(NAME_BON)
 	@echo "\n$(PURPLE)  Ready ✓$(NC)\n"
 
+-include $(OBJ_DPD)
+
 %.o: $(SRC_PATH)%.c
-	@$(CC) $(CFLAGS) -DKEY_HEADER='"$(KEY_HEADER)"' $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 $(LIBFT_AR):
 	@echo "\n$(PURPLE)  Compiling LIBFT...$(NC)"
@@ -50,7 +54,7 @@ $(LIBFT_AR):
 
 clean:
 	@echo "\n$(PURPLE)  Cleaning object files... $(NC)"
-	@rm -rf $(OBJ) $(OBJ_BONUS)
+	@rm -rf $(OBJ) $(OBJ_BON)
 	@rm -rf $(DPD) $(OBJ_DPD)
 	@make -s clean -C $(LIBFT_PATH)
 	@echo "\n$(PURPLE)  Done ✓$(NC)"
@@ -58,6 +62,7 @@ clean:
 fclean: clean
 	@echo "\n$(PURPLE)  Cleaning Push_swap...$(NC)"
 	@$(RM) $(NAME)
+	@$(RM) $(NAME_BON)
 	@make -s fclean -C $(LIBFT_PATH)
 	@echo "\n$(PURPLE)  Done ✓$(NC)"
 

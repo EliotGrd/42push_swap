@@ -14,27 +14,27 @@
 
 int	execute_cmds(char *line, t_stack *a, t_stack *b)
 {
-	if (!(ft_strcmp(line, "sa")))
+	if (!(ft_strcmp(line, "sa\n")))
 		return (sa(a), 1);
-	if (!(ft_strcmp(line, "sb")))
+	if (!(ft_strcmp(line, "sb\n")))
 		return (sb(b), 1);
-	if (!(ft_strcmp(line, "ss")))
+	if (!(ft_strcmp(line, "ss\n")))
 		return (ss(a, b), 1);
-	if (!(ft_strcmp(line, "pa")))
-		return (pa(a, b), 1);
-	if (!(ft_strcmp(line, "pb")))
-		return (pb(b, a), 1);
-	if (!(ft_strcmp(line, "ra")))
+	if (!(ft_strcmp(line, "pa\n")))
+		return (pa(b, a), 1);
+	if (!(ft_strcmp(line, "pb\n")))
+		return (pb(a, b), 1);
+	if (!(ft_strcmp(line, "ra\n")))
 		return (ra(a), 1);
-	if (!(ft_strcmp(line, "rb")))
+	if (!(ft_strcmp(line, "rb\n")))
 		return (rb(b), 1);
-	if (!(ft_strcmp(line, "rr")))
+	if (!(ft_strcmp(line, "rr\n")))
 		return (rr(a, b), 1);
-	if (!(ft_strcmp(line, "rra")))
+	if (!(ft_strcmp(line, "rra\n")))
 		return (rra(a), 1);
-	if (!(ft_strcmp(line, "rrb")))
+	if (!(ft_strcmp(line, "rrb\n")))
 		return (rrb(b), 1);
-	if (!(ft_strcmp(line, "rrr")))
+	if (!(ft_strcmp(line, "rrr\n")))
 		return (rrr(a, b), 1);
 	return (0);
 }
@@ -47,7 +47,7 @@ void	error_handler(char *line, t_stack *a, t_stack *b)
 	if (b->top)
 		free_stack(b);
 	write(2, "Error\n", 6);
-	return;
+	exit(0);
 }
 
 void	read_ops(t_stack *a, t_stack *b)
@@ -62,8 +62,6 @@ void	read_ops(t_stack *a, t_stack *b)
 		free(line);
 		line = get_next_line(0);
 	}
-	free(line);
-
 }
 
 void	check_and_res(t_stack *a, t_stack *b)
@@ -108,4 +106,5 @@ int	main(int ac, char **av)
 	init_stack(&b);
 	read_ops(&a, &b);
 	check_and_res(&a, &b);
+	free(arr);
 }
