@@ -37,7 +37,9 @@ $(NAME): $(OBJ) $(INCS)
 
 -include $(DPD)
 
-bonus: $(OBJ_BON) $(INCS)
+bonus: $(NAME_BON)
+
+$(NAME_BON): $(OBJ_BON) $(INCS)
 	@echo "\n$(PURPLE)  Compiling Bonus...$(NC)"
 	@$(CC) $(CFLAGS) $(OBJ_BON) $(LIBFT_AR) $(INC) -o $(NAME_BON)
 	@echo "\n$(PURPLE)  Ready ✓$(NC)\n"
