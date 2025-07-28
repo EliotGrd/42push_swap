@@ -22,7 +22,8 @@ We divide chunks until each chunk are composed of 3 or less digit, then starting
 For the maximum score I needed to sort in less than :\
 - 700 operations for a list of 100 numbers\
 - 5500 operations for a list of 500 numbers\
-\My scores on 10000 tests :\
+\
+My scores on 10000 tests :\
 - For 100 numbers\
 Worst : 677\
 Average : 665\
