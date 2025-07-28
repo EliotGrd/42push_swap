@@ -41,4 +41,5 @@ I used the complexity tester to get these stats (great tool by SimonCROS : https
 ## 🖐️ How to use ? 
 Git clone the repo, make and make_bonus if you want the checker and you're done !\
 You can test with any list of numbers like so ```./push_swap 9 2 5 8 1 0```\
-For the checker simply pipe the result like so ```./push_swap 9 2 5 8 1 0 | ./checker 9 2 5 8 1 0```
+For the checker simply pipe the result like so ```./push_swap 9 2 5 8 1 0 | ./checker 9 2 5 8 1 0```\
+You can also set the list in the $ARG so ```ARG="9 2 5 8 1 0"; ./push_swap $ARG | ./checker $ARG```
