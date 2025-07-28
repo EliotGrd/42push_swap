@@ -1,5 +1,5 @@
 <h1 align="center">
-	Push Swap !
+	Push Swap
 </h1>
 <p align="center">
 	Basically a Quicksort but in three chunks
@@ -22,8 +22,7 @@ We divide chunks until each chunk are composed of 3 or less digit, then starting
 For the maximum score I needed to sort in less than :\
 - 700 operations for a list of 100 numbers\
 - 5500 operations for a list of 500 numbers\
-\
-My scores on 10000 tests :\
+\My scores on 10000 tests :\
 - For 100 numbers\
 Worst : 677\
 Average : 665\
@@ -40,4 +39,5 @@ I used the complexity tester to get these stats (great tool by SimonCROS : https
 
 ## 🖐️ How to use ? 
 Git clone the repo, make and make_bonus if you want the checker and you're done !\
-You can test with any list of numbers like so ```./push_swap 9 2 5 8 1 0``` and for the checker simply pipe the result like so ```./push_swap 9 2 5 8 1 0 | ./checker 9 2 5 8 1 0```\
+You can test with any list of numbers like so ```./push_swap 9 2 5 8 1 0```\
+For the checker simply pipe the result like so ```./push_swap 9 2 5 8 1 0 | ./checker 9 2 5 8 1 0```
