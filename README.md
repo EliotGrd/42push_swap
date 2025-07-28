@@ -29,13 +29,13 @@ Worst : 677\
 Average : 665\
 Best : 650\
 Standart Deviation : 3.1\
-\
+  
 - For 500 numbers\
 Worst :4446\
 Average :4411\
 Best :4372\
 Standart Deviation :10.0\
-\
+  
 I used the complexity tester to get these stats (great tool by SimonCROS : https://github.com/SimonCROS/push_swap_tester)\
 
 ## 🖐️ How to use ? 
